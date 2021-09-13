@@ -1,0 +1,15 @@
+truth tables
+p	q	p & q
+t	t	t
+t	f	f
+f	t	f
+f	f	f
+
+in truth table p & q must be true for staement to be true
+
+
+p   q   p | q
+t   t   t
+t   f   t
+f   t   t
+f   f   f
