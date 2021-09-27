@@ -1,0 +1,23 @@
+lists
+-----------
+a list can store multiple values in memory in Python.
+a list looks like this: list = [1,2,3...]
+a list can have special ops performed on it
+values stored in a list are referenced from their position like list[0], list[1]...list[n]
+
+list methods
+------------
+
+methods = built-in functions
+list methods- are some action that can be applied to a list
+
+
+
+
+
+
+
+
+
+
+
