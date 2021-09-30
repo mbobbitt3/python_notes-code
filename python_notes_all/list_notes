@@ -1,0 +1,18 @@
+lists
+-----------
+a list can store multiple values in memory in Python.
+a list looks like this: list = [1,2,3...]
+a list can have special ops performed on it
+values stored in a list are referenced from their position like list[0], list[1]...list[n]
+
+list methods
+------------
+
+methods = built-in functions
+list methods- are some action that can be applied to a list
+
+immutable vs mutable
+--------------------
+variables are immutable meaning that whenever a new value is assigned to the same variable the previous value is blown away ex init = 1 ... init = 2 blows away 1 and replaces it with 2 this is called re-assignment 
+lists are mutable meaning that elements can be changed in the list at any point in the code 
+list not datatype specifc 

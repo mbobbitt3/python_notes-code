@@ -1,0 +1,8 @@
+loops
+-----
+for loop goes for i iterations and easier to control than while loop 
+while loop loops while some condition is true and is harder to escape from than for loop
+
+for loop structure
+
+for i in range(): #range can also be replaced with a list 
