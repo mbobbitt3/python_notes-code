@@ -20,8 +20,9 @@ def listing():
 		else:
 			items.append(newWord)
 
-	items.insert(num_iter-1, "and")
-	for i in len(items):
-		if(i == num_iter):
+	for i in range(num_iter):
+		if(items[i] == ):
+			items.insert(num_iter-1, "and")
+		else:
 			print(i, end =' ')
 listing()
