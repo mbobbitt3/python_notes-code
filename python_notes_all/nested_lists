@@ -1,0 +1,10 @@
+nested list
+-----------
+a nested list is a list within a list in Python.
+ex: students = [["John", 83, 90]. ["Lee", 85, 90]]
+
+ex 2: 
+students = [
+	["John", 83, 90],
+	["Lee, 85, 90]
+]
