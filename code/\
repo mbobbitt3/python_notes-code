@@ -1,0 +1,5 @@
+print("somewhere \"big boolin\"")
+
+print('''wow I can do
+multiline typing wihthout
+new line delimiter ''')
