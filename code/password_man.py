@@ -1,5 +1,5 @@
 from io import UnsupportedOperation
-import pickle
+import json
 import sys
 import os
 from base64 import b64encode
@@ -23,13 +23,11 @@ aes_key = get_random_bytes(32)# generate random 32 byte  key for AES using good 
 iv = os.urandom(16) # generate random 16 byte init vector for AES-CBC 
 menu_text = """
 What would you like to do:
-1. Open password file
-2. Add an entry
-3. Lookup an entry
-4. Edit entry
-5. Save password file
-6. Quit program
-7. Print dictionary for testing
+1. Add an entry
+2. Lookup an entry
+3. Edit entry
+4. Quit program
+5. Print dictionary for testing
 Please enter a number (1-7)"""
 
 
@@ -55,39 +53,22 @@ def password_decrypt(ctx):
 	plaint= unpad(cipher.decrypt(decode_ctx), AES.block_size)
 	return plaint
 
-#return password_encrypt(encrypted_message, -key)
-
-def load_password_file():
-    """Loads a password file.  The file must be in the same directory as the .py file
-
-    :param file_name (string) The file to load.  Must be a pickle file in the correct format
-    """
-    global entries, encryption_key
-    entries, encryption_key = pickle.load(open(password_file_name, "rb"))
-
-
-def save_password_file():
-    """Saves a password file.  The file will be created if it doesn't exist.
-
-    :param file_name (string) The file to save.
-    """
-    pickle.dump((entries, encryption_key), open(password_file_name, "wb"))
-
-
 def add_entry():
-    """Adds an entry with an entry title, username, password and url
-    
-    Includes all user interface interactions to get the necessary information from the user
-    """
-    # Fill in your code here
-    platform = input("enter platform for password to be saved: ")
-    entries[platform] ={}
-    user =  input("enter username for platform: ")
-    entries[platform]['user'] = user
-    passwd = input("enter password associated with for platform: ")
-    entries[platform]['passwd'] = password_encrypt(passwd, aes_key)
-    url = input("enter url asociated with platform: ")
-    entries[platform]['url'] = url
+	"""Adds an entry with an entry title, username, password and url
+	Includes all user interface interactions to get the necessary information from the user
+	"""
+	fd = open("passwds.json", 'a+')
+	platform = input("enter platform for password to be saved: ")
+	entries[platform] ={}
+	user =  input("enter username for platform: ")
+	entries[platform]['user'] = user
+	passwd = input("enter password associated with for platform: ")
+	entries[platform]['passwd'] = password_encrypt(passwd, aes_key)
+	url = input("enter url asociated with platform: ")
+	entries[platform]['url'] = url
+	j_data = json.dump(entries, fd)
+	fd.write('\n')
+	fd.close()
 
 
 
@@ -97,7 +78,6 @@ def print_entry():
 	print("Which entry do you want to lookup the information for?")
 	for key in entries:
 		print(key)
-	
 	entry = input('Enter entry name: ')
 
     # Fill in your code here
@@ -139,13 +119,11 @@ def print_dictionary():
     print(entries)
 
 
-menu_dict = {'1': load_password_file,
-             '2': add_entry,
-             '3': print_entry,
-			 '4': edit_entry,
-             '5': save_password_file,
-             '6': end_program,
-             '7': print_dictionary}
+menu_dict = {'1': add_entry,
+             '2': print_entry,
+			 '3': edit_entry,
+             '4': end_program,
+             '5': print_dictionary}
 
 while True:
     user_choice = input(menu_text)
