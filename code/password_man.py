@@ -16,7 +16,6 @@ from Crypto.Random import get_random_bytes
 entries = {}
 
 # The password file name to store the data to
-password_file_name = "PasswordFile.pickle"
 # The encryption key for the caesar cypher
 #encryption_key = 16
 aes_key = get_random_bytes(32)# generate random 32 byte  key for AES using good rand byte gen 
@@ -28,7 +27,8 @@ What would you like to do:
 3. Edit entry
 4. Quit program
 5. Print dictionary for testing
-Please enter a number (1-7)"""
+6. file print
+Please enter a number (1-6)"""
 
 
 def password_encrypt(unencrypted_message, aes_key):
@@ -57,6 +57,7 @@ def add_entry():
 	"""Adds an entry with an entry title, username, password and url
 	Includes all user interface interactions to get the necessary information from the user
 	"""
+
 	fd = open("passwds.json", 'a+')
 	platform = input("enter platform for password to be saved: ")
 	entries[platform] ={}
@@ -67,9 +68,8 @@ def add_entry():
 	url = input("enter url asociated with platform: ")
 	entries[platform]['url'] = url
 	j_data = json.dump(entries, fd)
-	fd.write('\n')
+	fd.write(',\n')
 	fd.close()
-
 
 
 def print_entry():
@@ -87,11 +87,19 @@ def print_entry():
 	else:
 		print("entry does not exist")
 
+def file_print():
+	fd = open("passwds.json", 'r')
+	data = json.loads(fd)
+	print(data)
+	fd.close()
 def edit_entry():
 	"""
 	this is 2n add feature: Allow User to edit fields from entries 
 	"""
-
+	f = "passwds.json"
+	with open(f, 'r') as fd:
+		data = json.load(fd)
+		fd.close()
 	for key in entries:
 		print(key)
 	entry = input("name of platform to edit: ")
@@ -101,10 +109,16 @@ def edit_entry():
 		field = input("enter field you want to edit: ")
 		if(field in entries[entry] and field != 'passwd'):
 			entries[entry][field] = input("enter changes to value in field: ")
+			data[entry][field] = entries[entry][field]
+			with open(f, 'w') as fd:
+				j_data = json.dump(data, fd)
+				fd.close()
 		elif(field  == 'passwd'):
 			new_passwd = input("Enter new password: ")
 			enc_passwd = password_encrypt(new_passwd, aes_key)
 			entries[entry][field] = enc_passwd
+			with open(f, 'w') as fd:
+				js_passwd = json.dump(entries, fd)
 		else:
 			print("that field does not exist")
 			edit_entry()
@@ -123,7 +137,8 @@ menu_dict = {'1': add_entry,
              '2': print_entry,
 			 '3': edit_entry,
              '4': end_program,
-             '5': print_dictionary}
+             '5': print_dictionary,
+			 '6': file_print}
 
 while True:
     user_choice = input(menu_text)
